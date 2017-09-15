@@ -35,6 +35,15 @@ namespace RepositoryPattern.Repository
             return await _context.RoomCancellation.Find(Builders<RoomCancellation>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
         }
 
+        public async Task<RoomCancellation> Get(DateTime date, string timeSlot, string roomNo)
+        {
+            var builder = Builders<RoomCancellation>.Filter;
+            var filt = builder.Eq("TimeSlot",timeSlot) & builder.Eq("RoomNo", roomNo) & builder.Gt("Date",date);
+            //builder.Eq("Date", date)
+
+            return await _context.RoomCancellation.Find(filt).FirstOrDefaultAsync();
+        }
+
         public async Task<DeleteResult> Remove(string id)
         {
             return await _context.RoomCancellation.DeleteOneAsync(Builders<RoomCancellation>.Filter.Eq("Id", id));

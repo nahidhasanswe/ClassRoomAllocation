@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using RepositoryPattern.Model_Class;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace RepositoryPattern.interfaces
         public interface IRoutine
         {
             Task<IEnumerable<Routine>> Get();
-            Task<Routine> Get(string id);
+            Task<Routine> Get(string dayName);
             Task Add(Routine routine);
             Task Update(string id, Routine routine);
             Task<DeleteResult> Remove(string id);
@@ -24,6 +25,7 @@ namespace RepositoryPattern.interfaces
         {
             Task<IEnumerable<RoomAllocation>> Get();
             Task<RoomAllocation> Get(string id);
+            Task<RoomAllocation> Get(DateTime date,string timeSlot,string roomNo);
             Task Add(RoomAllocation room);
             Task Update(string id, RoomAllocation room);
             Task<DeleteResult> Remove(string id);
@@ -34,6 +36,7 @@ namespace RepositoryPattern.interfaces
         {
             Task<IEnumerable<RoomCancellation>> Get();
             Task<RoomCancellation> Get(string id);
+            Task<RoomCancellation> Get(DateTime date,string timeSlot, string roomNo);
             Task Add(RoomCancellation room);
             Task Update(string id, RoomCancellation room);
             Task<DeleteResult> Remove(string id);

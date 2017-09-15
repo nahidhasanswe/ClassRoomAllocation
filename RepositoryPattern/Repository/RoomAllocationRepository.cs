@@ -33,6 +33,13 @@ namespace RepositoryPattern.Repository
             return await _context.RoomAllocation.Find(Builders<RoomAllocation>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
         }
 
+        public async Task<RoomAllocation> Get(DateTime date, string timeSlot, string roomNo)
+        {
+            var builder = Builders<RoomAllocation>.Filter;
+            var filt = builder.Eq("TimeSlot", timeSlot) & builder.Eq("RoomNo", roomNo) & builder.Gt("Date", date);
+            return await _context.RoomAllocation.Find(filt).FirstOrDefaultAsync();
+        }
+
         public async Task<DeleteResult> Remove(string id)
         {
             return  await _context.RoomAllocation.DeleteOneAsync(Builders<RoomAllocation>.Filter.Eq("Id", id));

@@ -30,9 +30,9 @@ namespace RepositoryPattern.Repository
            return await _context.Routine.Find(x=>true).ToListAsync();
         }
 
-        public async Task<Routine> Get(string id)
+        public async Task<Routine> Get(string dayName)
         {
-            return await _context.Routine.Find(Builders<Routine>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
+            return await _context.Routine.Find(Builders<Routine>.Filter.Eq("DayName", dayName)).FirstOrDefaultAsync();
         }
 
         public async Task<DeleteResult> Remove(string id)

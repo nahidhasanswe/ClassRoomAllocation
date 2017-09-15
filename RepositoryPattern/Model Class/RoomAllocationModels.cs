@@ -22,6 +22,7 @@ namespace RepositoryPattern.Model_Class
         public string TimeSlot { get; set; }
         public string RoomNo { get; set; }
         public string CourseCode { get; set; }
+        public Boolean isNoClass { get; set; }
         public string TeachersInitial { get; set; }
     }
 
@@ -45,7 +46,7 @@ namespace RepositoryPattern.Model_Class
         public string Reason { get; set; }
         public string CourseCode { get; set; }
         public string TeachersInitial { get; set; }
-        public BsonBoolean isAccept { get; set; }
+        public Boolean isAccept { get; set; }
     }
 
 
