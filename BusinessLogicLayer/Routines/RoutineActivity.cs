@@ -36,6 +36,11 @@ namespace BusinessLogicLayer.Routines
 
             var routine = await _routine.Get(date.DayOfWeek.ToString());
 
+            if (routine == null)
+            {
+                return routine;
+            }
+
             foreach(TimeSlotClass _classInfo in routine.Classes)
             {
                 var roomAllocation = await _roomAllocation.Get(date,_classInfo.TimeSlot,_classInfo.RoomNo);
@@ -58,6 +63,22 @@ namespace BusinessLogicLayer.Routines
 
 
             return routine;
+        }
+
+        public async Task<IQueryable<object>> GetIndividualRoutine(string TeachersInitial)
+        {
+            var routine = await _routine.Get();
+
+            var queryResult = from r in routine.AsQueryable()
+                              select new Routine
+                              {
+                                  Id=r.Id,
+                                  DayName = r.DayName,
+                                  Classes = (from c in r.Classes.Where(t => t.TeachersInitial == TeachersInitial)
+                                             select c).ToList()
+                              };
+
+            return queryResult;
         }
     }
 }

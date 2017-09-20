@@ -210,6 +210,7 @@
     <Compile Include="Areas\AllocationRoom\Controllers\RoomAllocationActivityController.cs" />
     <Compile Include="Areas\AllocationRoom\Controllers\RoomAllocationController.cs" />
     <Compile Include="Areas\CancellationRoom\CancellationRoomAreaRegistration.cs" />
+    <Compile Include="Areas\CancellationRoom\Controllers\RoomCancellationActivityController.cs" />
     <Compile Include="Areas\CancellationRoom\Controllers\RoomCancellationController.cs" />
     <Compile Include="Areas\Routines\Controllers\RoutineActivityController.cs" />
     <Compile Include="Areas\Routines\Controllers\RoutineDataController.cs" />

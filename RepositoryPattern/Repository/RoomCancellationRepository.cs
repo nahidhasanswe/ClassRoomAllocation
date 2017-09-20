@@ -38,7 +38,7 @@ namespace RepositoryPattern.Repository
         public async Task<RoomCancellation> Get(DateTime date, string timeSlot, string roomNo)
         {
             var builder = Builders<RoomCancellation>.Filter;
-            var filt = builder.Eq("TimeSlot",timeSlot) & builder.Eq("RoomNo", roomNo) & builder.Gt("Date",date);
+            var filt = builder.Eq("TimeSlot",timeSlot) & builder.Eq("RoomNo", roomNo) & builder.Eq("Date",date.Date);
             //builder.Eq("Date", date)
 
             return await _context.RoomCancellation.Find(filt).FirstOrDefaultAsync();

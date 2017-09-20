@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Routines;
+using BusinessLogicLayer.Some_Logic;
 using MongoDB.Bson;
 using RepositoryPattern.Model_Class;
 using System;
@@ -25,10 +26,14 @@ namespace ClassRoomAllocation.Areas.Routines.Controllers
 
         [HttpPost]
         [Route("GetEmptyClassroom")]
-        public async Task<Routine> GetEmptyClassRoom(AllocateDate date)
+        public async Task<IHttpActionResult> GetEmptyClassRoom(AllocateDate date)
         {
-            date.date = DateTime.UtcNow.ToLocalTime().AddDays(1);
-            return await _routine.GetEmptyClassRoom(date.date.Date);
+            date.date = Date.GetLocalZoneDate(date.date);
+            var routine= await _routine.GetEmptyClassRoom(date.date);
+            if (routine == null)
+                return BadRequest("No routine found for this date");
+            else
+                return Ok(routine);
         }
 
         [HttpGet]
@@ -36,6 +41,13 @@ namespace ClassRoomAllocation.Areas.Routines.Controllers
         public async Task<Routine> GetRoutineByDay(string dayName)
         {
             return await _routine.GetRoutineByDay(dayName);
+        }
+
+        [HttpGet]
+        [Route("GetRoutineByTeacher")]
+        public async Task<IEnumerable<object>> GetRoutineByTeacher()
+        {
+            return await _routine.GetIndividualRoutine(User.Identity.Name);
         }
     }
 

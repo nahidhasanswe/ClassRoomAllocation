@@ -36,7 +36,7 @@ namespace RepositoryPattern.Repository
         public async Task<RoomAllocation> Get(DateTime date, string timeSlot, string roomNo)
         {
             var builder = Builders<RoomAllocation>.Filter;
-            var filt = builder.Eq("TimeSlot", timeSlot) & builder.Eq("RoomNo", roomNo) & builder.Gt("Date", date);
+            var filt = builder.Eq("TimeSlot", timeSlot) & builder.Eq("RoomNo", roomNo) & builder.Eq("Date", date.Date);
             return await _context.RoomAllocation.Find(filt).FirstOrDefaultAsync();
         }
 

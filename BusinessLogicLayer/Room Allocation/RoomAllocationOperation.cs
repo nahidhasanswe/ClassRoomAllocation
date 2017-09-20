@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using BusinessLogicLayer.Some_Logic;
+using MongoDB.Driver;
 using RepositoryPattern.Model_Class;
 using RepositoryPattern.Repository;
 using System;
@@ -20,7 +21,8 @@ namespace BusinessLogicLayer.Room_Allocation
 
         public async Task AddRoomAllocation(RoomAllocation room)
         {
-            room.Date = DateTime.UtcNow.ToLocalTime().Date.AddDays(2);
+            // room.Date = ;
+            room.Date = Date.GetLocalZoneDate(room.Date);
             await _roomAllocation.Add(room);
         }
 

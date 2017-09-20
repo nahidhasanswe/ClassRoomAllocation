@@ -20,7 +20,6 @@ namespace BusinessLogicLayer.Room_Cancellation
 
         public async Task AddRoomCancellation(RoomCancellation room)
         {
-            room.Date = DateTime.UtcNow.ToLocalTime().Date.AddDays(1);
             await _roomCancellation.Add(room);
         }
 
