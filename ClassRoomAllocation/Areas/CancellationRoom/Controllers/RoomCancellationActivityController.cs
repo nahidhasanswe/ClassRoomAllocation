@@ -15,6 +15,22 @@ namespace ClassRoomAllocation.Areas.CancellationRoom.Controllers
     {
        private readonly RoomCancellationActivity _activity = new RoomCancellationActivity();
 
+        [Route("CheckAvailability")]
+        [HttpPost]
+        public async Task<IHttpActionResult> CheckAvailableForRoomAllocation(AvailableRoom room)
+        {
+            var result = await _activity.CheckAvailability(room);
+
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("The room is already canceled by you");
+            }
+        }
+
         [HttpGet]
         [Route("GetByIndividual")]
         public async Task<IEnumerable<RoomCancellation>> GetIndividualRoomCancellationList()

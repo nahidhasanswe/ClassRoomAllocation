@@ -34,13 +34,14 @@ namespace BusinessLogicLayer.Room_Allocation
         {
             var ListOfRoomAllocation = await _roomAllocation.Get();
 
-            var query = from roomList in ListOfRoomAllocation.AsQueryable().Where(r => r.TeachersInitial == TeachersInitial && r.Date>=DateTime.Today)
+            var query = from roomList in ListOfRoomAllocation.AsQueryable().Where(r => r.TeachersInitial == TeachersInitial && r.Date>=DateTime.Today).OrderByDescending(x=>x.Date)
                         select roomList;
             return query.AsEnumerable();
         }
 
         public async Task<IEnumerable<RoomAllocation>> GetAllRoomAllocationList()
         {
+            
             return await _roomAllocation.Get();
         }
 

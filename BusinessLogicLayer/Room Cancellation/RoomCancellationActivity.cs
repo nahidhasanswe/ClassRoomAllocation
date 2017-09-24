@@ -1,4 +1,5 @@
-﻿using RepositoryPattern.Model_Class;
+﻿using BusinessLogicLayer.Some_Logic;
+using RepositoryPattern.Model_Class;
 using RepositoryPattern.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,17 @@ namespace BusinessLogicLayer.Room_Cancellation
             _roomRepo = new RoomCancellationRepository();
         }
 
+        public async Task<Boolean> CheckAvailability(AvailableRoom room)
+        {
+
+            var roomAvailable = await _roomRepo.Get(Date.GetLocalZoneDate(room.date), room.timeSlot, room.roomNo);
+
+            if (roomAvailable == null)
+                return true;
+            else
+                return false;
+        }
+
         public async Task<IEnumerable<RoomCancellation>> GetAllRoomCancellationList()
         {
             return await _roomRepo.Get();
@@ -26,7 +38,7 @@ namespace BusinessLogicLayer.Room_Cancellation
         {
             var roomList = await _roomRepo.Get();
 
-            var queryResult = from list in roomList.AsQueryable().Where(r => r.TeachersInitial == TeachersInitial && r.Date >= DateTime.Today)
+            var queryResult = from list in roomList.AsQueryable().Where(r => r.TeachersInitial == TeachersInitial && r.Date >= DateTime.Today).OrderByDescending(x=>x.Date)
                               select list;
             return queryResult.AsEnumerable();
         }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using BusinessLogicLayer.Some_Logic;
+using MongoDB.Driver;
 using RepositoryPattern.Model_Class;
 using RepositoryPattern.Repository;
 using System;
@@ -20,7 +21,13 @@ namespace BusinessLogicLayer.Room_Cancellation
 
         public async Task AddRoomCancellation(RoomCancellation room)
         {
+            room.Date = Date.GetLocalZoneDate(room.Date);
             await _roomCancellation.Add(room);
+        }
+
+        public async Task<RoomCancellation> GetRoomCancellationInfo(string id)
+        {
+           return await _roomCancellation.Get(id);
         }
 
         public async Task UpdateRoomCancellation(RoomCancellation room)

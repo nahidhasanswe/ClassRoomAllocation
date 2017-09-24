@@ -45,8 +45,7 @@ namespace BusinessLogicLayer.Routines
             {
                 var roomAllocation = await _roomAllocation.Get(date,_classInfo.TimeSlot,_classInfo.RoomNo);
                 var roomCancellation = await _roomCancellation.Get(date, _classInfo.TimeSlot, _classInfo.RoomNo);
-
-                if(roomAllocation != null && _classInfo.isNoClass==true)
+                if (roomAllocation != null && roomCancellation != null)
                 {
                     _classInfo.isNoClass = false;
                     _classInfo.CourseCode = roomAllocation.CourseCode;
@@ -54,8 +53,15 @@ namespace BusinessLogicLayer.Routines
                     _classInfo.TeachersInitial = roomAllocation.TeachersInitial;
                     _classInfo.TimeSlot = roomAllocation.TimeSlot;
                 }
-
-                if(roomCancellation != null && _classInfo.isNoClass == false)
+                else if(roomAllocation != null && _classInfo.isNoClass==true)
+                {
+                    _classInfo.isNoClass = false;
+                    _classInfo.CourseCode = roomAllocation.CourseCode;
+                    _classInfo.RoomNo = roomAllocation.RoomNo;
+                    _classInfo.TeachersInitial = roomAllocation.TeachersInitial;
+                    _classInfo.TimeSlot = roomAllocation.TimeSlot;
+                }
+                else if(roomCancellation != null && _classInfo.isNoClass == false)
                 {
                     _classInfo.isNoClass = true;
                 }

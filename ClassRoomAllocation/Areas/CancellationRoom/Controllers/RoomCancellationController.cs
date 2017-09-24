@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Room_Cancellation;
+﻿using BusinessLogicLayer.Room_Allocation;
+using BusinessLogicLayer.Room_Cancellation;
 using MongoDB.Driver;
 using RepositoryPattern.Model_Class;
 using System;
@@ -22,6 +23,7 @@ namespace ClassRoomAllocation.Areas.CancellationRoom.Controllers
         {
             try
             {
+                room.TeachersInitial = User.Identity.Name;
                 await _roomCancellation.AddRoomCancellation(room);
                 return Ok("Successfully Cancel the Class from the room");
             }
@@ -50,18 +52,30 @@ namespace ClassRoomAllocation.Areas.CancellationRoom.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("Remove/{id}")]
-        public async Task<IHttpActionResult> RemoveRoomCancellation(string id)
+        [HttpPost]
+        [Route("Remove")]
+        public async Task<IHttpActionResult> RemoveRoomCancellation(RoomCancellation room)
         {
+            RoomAllocationActivity _activity = new RoomAllocationActivity();
+
             try
             {
-                await _roomCancellation.RemoveRoomCancellation(id);
-                return Ok("Successfully remove room cancellation");
+
+                var _result = await _activity.CheckAvailability(new AvailableRoom { date =room.Date, roomNo =room.RoomNo, timeSlot =room.TimeSlot });
+                if (_result)
+                {
+                    await _roomCancellation.RemoveRoomCancellation(room.Id);
+                    return Ok("Successfully remove room cancellation");
+                }
+                else
+                {
+                    return BadRequest("The room is already allocated by someone");
+                }
+                
             }
             catch
             {
-                return BadRequest("The room is allocated by someone");
+                return BadRequest("Internal Server Problem");
             }
         }
 

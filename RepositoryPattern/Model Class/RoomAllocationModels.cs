@@ -48,6 +48,7 @@ namespace RepositoryPattern.Model_Class
         public string CourseCode { get; set; }
         public string TeachersInitial { get; set; }
         public Boolean isAccept { get; set; }
+        public DateTime Submited_Date { get; set; }
     }
 
 
