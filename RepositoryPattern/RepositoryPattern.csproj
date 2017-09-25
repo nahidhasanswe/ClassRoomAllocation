@@ -55,8 +55,11 @@
   <ItemGroup>
     <Compile Include="DbContext.cs" />
     <Compile Include="interfaces\IRepository.cs" />
+    <Compile Include="Model Class\AspNetUsers.cs" />
     <Compile Include="Model Class\RoomAllocationModels.cs" />
+    <Compile Include="Model Class\UserLoginInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AspNetUserRepository.cs" />
     <Compile Include="Repository\RoomAllocationRepository.cs" />
     <Compile Include="Repository\RoomCancellationRepository.cs" />
     <Compile Include="Repository\RoutineRepository.cs" />

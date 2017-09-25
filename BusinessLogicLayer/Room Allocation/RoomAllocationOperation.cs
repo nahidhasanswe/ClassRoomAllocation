@@ -22,6 +22,7 @@ namespace BusinessLogicLayer.Room_Allocation
         public async Task AddRoomAllocation(RoomAllocation room)
         {
             // room.Date = ;
+            room.Submited_Date = DateTime.Now;
             room.Date = Date.GetLocalZoneDate(room.Date);
             await _roomAllocation.Add(room);
         }

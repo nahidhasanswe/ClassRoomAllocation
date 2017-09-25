@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminActivity.cs" />
+    <Compile Include="Admin\AdminOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room Allocation\RoomAllocationActivity.cs" />
     <Compile Include="Room Allocation\RoomAllocationOperation.cs" />

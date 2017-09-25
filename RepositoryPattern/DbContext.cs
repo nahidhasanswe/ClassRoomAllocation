@@ -52,5 +52,13 @@ namespace RepositoryPattern
                 return _db.GetCollection<Teachers>("Teachers");
             }
         }
+
+       public IMongoCollection<AspNetUsers> Users
+        {
+            get
+            {
+                return _db.GetCollection<AspNetUsers>("AspNetUsers");
+            }
+        }
     }
 }

@@ -206,6 +206,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminActivityController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminOperationController.cs" />
     <Compile Include="Areas\AllocationRoom\AllocationRoomAreaRegistration.cs" />
     <Compile Include="Areas\AllocationRoom\Controllers\RoomAllocationActivityController.cs" />
     <Compile Include="Areas\AllocationRoom\Controllers\RoomAllocationController.cs" />
@@ -215,6 +218,8 @@
     <Compile Include="Areas\Routines\Controllers\RoutineActivityController.cs" />
     <Compile Include="Areas\Routines\Controllers\RoutineDataController.cs" />
     <Compile Include="Areas\Routines\RoutinesAreaRegistration.cs" />
+    <Compile Include="Areas\Teacher\Controllers\TeacherOperationController.cs" />
+    <Compile Include="Areas\Teacher\TeacherAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
