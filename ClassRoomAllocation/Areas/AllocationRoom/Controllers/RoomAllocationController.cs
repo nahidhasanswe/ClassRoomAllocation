@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Room_Allocation;
+﻿using BusinessLogicLayer.Admin;
+using BusinessLogicLayer.Room_Allocation;
 using MongoDB.Driver;
 using RepositoryPattern.Model_Class;
 using System;
@@ -24,6 +25,9 @@ namespace ClassRoomAllocation.Areas.AllocationRoom.Controllers
             {
                 room.TeachersInitial = User.Identity.Name;
                 await _roomAllocation.AddRoomAllocation(room);
+
+
+
                 return Ok("Successfully submit request for room allocation");
             }
             catch(MongoWriteException)

@@ -17,14 +17,15 @@ namespace ClassRoomAllocation
 
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store)
+        public ApplicationUserManager(IUserStore<ApplicationUser> store, IIdentityMessageService service)
             : base(store)
         {
+            this.EmailService = service;
         }
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationIdentityContext>().Users));
+            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationIdentityContext>().Users), new Service.EMail());
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -40,6 +41,10 @@ namespace ClassRoomAllocation
                 RequireLowercase = false,
                 RequireUppercase = false,
             };
+
+            //Config the Email Setting
+            manager.EmailService = new Service.EMail();
+
             // Configure user lockout defaults
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);

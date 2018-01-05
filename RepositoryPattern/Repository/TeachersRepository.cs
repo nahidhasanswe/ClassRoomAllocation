@@ -34,6 +34,11 @@ namespace RepositoryPattern.Repository
             return await _context.Teachers.Find(Builders<Teachers>.Filter.Eq("Id", id)).FirstOrDefaultAsync();
         }
 
+        public async Task<Teachers> GetByUserNameAsync(string userName)
+        {
+            return await _context.Teachers.Find(Builders<Teachers>.Filter.Eq("TeacherInitial", userName)).FirstOrDefaultAsync();
+        }
+
         public async Task<DeleteResult> Remove(string id)
         {
             return await _context.Teachers.DeleteOneAsync(Builders<Teachers>.Filter.Eq("Id", id));

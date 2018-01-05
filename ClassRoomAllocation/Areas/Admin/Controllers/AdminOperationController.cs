@@ -1,12 +1,15 @@
 ﻿using BusinessLogicLayer.Admin;
 using BusinessLogicLayer.Room_Allocation;
+using BusinessLogicLayer.Routines;
 using RepositoryPattern.Model_Class;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace ClassRoomAllocation.Areas.Admin.Controllers
@@ -18,14 +21,43 @@ namespace ClassRoomAllocation.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("AddRoutine")]
-        public async Task<IHttpActionResult> AddRoutine (ICollection<Routine> routineList)
+        public async Task<IHttpActionResult> AddRoutine ()
         {
-            var result = await _operation.AddRoutine(routineList);
+            string path = HttpContext.Current.Server.MapPath("~/EvidenceFiles/");
 
-            if (result)
-                return Ok("Successfully added Routine");
+            var files = HttpContext.Current.Request.Files;
+
+            File_Info filePath = new File_Info();
+
+            if (files != null)
+            {
+                if (files.Count > 0)
+                {
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFile file = files[i];
+                        filePath = UploadFile(file, path);
+                    }
+                }
+
+            }
             else
+            {
+                return BadRequest("Something Went wrong");
+            }
+
+            RoutineOperation _operation = new RoutineOperation();
+
+            try
+            {
+                await _operation.ExeclToRoutineUploader(filePath.path, filePath.extension);
+
+                return Ok();
+            }
+            catch
+            {
                 return BadRequest("Internal Server Problem");
+            }
         }
 
         [HttpPost]
@@ -65,7 +97,36 @@ namespace ClassRoomAllocation.Areas.Admin.Controllers
         }
 
 
+        private File_Info UploadFile(HttpPostedFile file, string mapPath)
+        {
 
+            string fileName = new FileInfo(file.FileName).Name;
+            string extension = new FileInfo(file.FileName).Extension;
+
+
+
+            if (file.ContentLength > 0)
+            {
+                Guid id = Guid.NewGuid();
+                var filePath = Path.GetFileName("SWERoutine"+ extension);
+                file.SaveAs(mapPath + filePath);
+
+                File_Info _info = new File_Info();
+
+                _info.path = mapPath + filePath;
+                _info.extension = extension;
+
+                return _info;
+            }
+            return null;
+
+        }
+    }
+
+    public class File_Info
+    {
+        public string path { get; set; }
+        public string extension { get; set; }
     }
 
 }

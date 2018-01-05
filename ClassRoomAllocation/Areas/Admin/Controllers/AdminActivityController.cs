@@ -40,6 +40,13 @@ namespace ClassRoomAllocation.Areas.Admin.Controllers
             return await _activity.GetPendingRoomAllocation();
         }
 
-        
+        [HttpGet]
+        [Route("GetAdminList")]
+        public async Task<IEnumerable<object>> GetAdminEmailList()
+        {
+            return await _activity.GetAdminEmailList();
+        }
+
+
     }
 }
